@@ -1,0 +1,407 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+  color: aliceblue;
+}
+
+body,
+.main-box {
+  background: transparent !important;
+}
+
+.mode-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.mode-toast.show {
+  opacity: 1;
+}
+
+
+.main-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #272727;
+  padding: clamp(0.5rem, 2vw, 1rem);
+}
+
+#audio-list {
+  flex: 1;
+  display: none;
+  max-height: 64.5vh;
+  overflow: hidden;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+#audio-info {
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color: #00b8db;
+  text-align: center;
+  width: 90%;
+  /* 信息区域宽度 */
+}
+
+.progress-bar-box {
+  margin: clamp(0.5rem, 2vw, 1rem) 0;
+}
+
+#progress-bar-main {
+  cursor: pointer;
+}
+
+.progress-bar {
+  margin: clamp(0.3rem, 1vw, 0.5rem) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.current-progress {
+  border-radius: 20px;
+  width: 0%;
+  height: 0.6em;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.progress-bg {
+  position: absolute;
+  width: 100%;
+  height: 0.6em;
+  border-radius: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.progress-bar-box .time-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  /* 自适应字体大小 */
+}
+
+.audio-controls {
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+  margin: clamp(0.5rem, 2vw, 1rem) 0;
+  height: clamp(2rem, 8vw, 3rem);
+  /* 自适应高度 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.5rem, 2vw, 1rem) 0;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .audio-controls {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 999;
+  }
+
+  body.show-controls .audio-controls {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+#audio-controls-placeholder {
+  height: 0;
+  transition: height 0.4s ease;
+}
+
+body.show-controls #audio-controls-placeholder {
+  height: clamp(2rem, 8vw, 3rem);
+  /* 与 .audio-controls 高度一致 */
+}
+
+
+.audio-controls button {
+  width: clamp(1.8rem, 6vw, 2.5rem);
+  /* 自适应按钮大小 */
+  height: clamp(1.8rem, 6vw, 2.5rem);
+  /* 自适应按钮大小 */
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-width: 0;
+  cursor: pointer;
+}
+
+.audio-controls button i {
+  color: #fff;
+  font-size: clamp(1rem, 4vw, 1.5rem);
+  /* 自适应图标大小 */
+}
+
+.audio-controls button.play-icon {
+  width: clamp(2.5rem, 8vw, 4rem);
+  /* 自适应播放按钮大小 */
+  height: clamp(2.5rem, 8vw, 4rem);
+  /* 自适应播放按钮大小 */
+  border-width: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#audio-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.audio-list-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.5rem, 2vw, 0.8rem) clamp(0.7rem, 3vw, 1rem);
+  /* 自适应内边距 */
+  margin-bottom: clamp(0.2rem, 1vw, 0.5rem);
+  /* 自适应外边距 */
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.audio-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.audio-list-item.active {
+  background-color: #007bff;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0, 123, 255, 0.4);
+}
+
+.audio-list-name {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: clamp(0.5rem, 2vw, 1rem);
+  /* 自适应间距 */
+  font-size: clamp(0.9rem, 3vw, 1rem);
+  /* 自适应字体大小 */
+}
+
+.audio-list-author {
+  color: #ccc;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  /* 自适应字体大小 */
+}
+
+.audio-list-item.active .audio-list-author {
+  color: #e0e0e0;
+}
+
+.lyrics-container {
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: 0.2rem;
+  overflow-x: visible;
+  overflow-y: auto;
+  padding: clamp(1rem, 4vw, 1.5rem);
+  text-align: center;
+  word-break: break-word;
+  border-radius: 10px;
+  transition: margin-bottom 0.3s ease;
+  position: relative;
+  z-index: 1;
+  margin-top: clamp(0.1rem, 3vw, 1.5rem);
+  height: clamp(250px, 55vh, 700px); 
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.lyrics-title {
+  font-family: "HarmonyOS_Regular";
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: none;
+  font-weight: bold;
+  font-size: 25px;
+  margin: 0 auto; /* 新增：确保块元素居中 */
+  display: block; /* 确保是块级或类块级元素 */
+  width: fit-content; /* 防止被拉伸，自动适应内容宽度 */
+}
+
+.lyrics-scroll {
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 20px;
+}
+
+/* 每行歌词 */
+.lyric-line {
+  width: 100%;
+  font-family: "HarmonyOS_Regular";
+  font-size: clamp(1rem, 3vw, 1.3rem);
+  color: #aaa;
+  padding: 0.3em 0;
+  transition: all 0.5s ease;
+  scroll-behavior: smooth;
+
+}
+
+/* WebKit浏览器（Chrome、Safari等） */
+.lyrics-container::-webkit-scrollbar {
+  display: none;
+}
+
+.lyrics-container ul {
+  text-align: center;
+  list-style: none;
+  padding: 0;
+  margin: auto;
+}
+
+.lyric-line {
+  padding: clamp(0.4rem, 1.5vw, 0.8rem) 0;
+  /* 自适应内边距 */
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  /* 自适应字体大小 */
+  color: #aaa;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 高亮当前歌词，放大加粗并置中 */
+.lyric-line.active-lyric {
+  font-family: "HarmonyOS_Regular";
+  color: #fff;
+  font-weight: 700;
+  font-size: clamp(1.2rem, 5vw, 1.8rem);
+  /* 放大字体本身，而不是元素 */
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  /* 让高亮行加点阴影，提升立体感 */
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+  user-select: text;
+}
+
+
+/* 小屏幕设备优化 */
+@media (max-width: 480px) {
+  .lyrics-container{
+    width: 100%;
+  }
+  .audio-name {
+    font-size: clamp(1rem, 5vw, 1.3rem);
+    /* 小屏幕上减小歌曲名称字体大小 */
+  }
+
+  .audio-author {
+    font-size: clamp(0.8rem, 4vw, 1rem);
+    /* 小屏幕上减小歌手名称字体大小 */
+  }
+
+  .lyrics-title {
+    font-size: 18px;
+  }
+
+  .lyric-line.active-lyric {
+    color: #fff;
+    font-weight: 600;
+    transform: scale(1.1);
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+    user-select: text;
+    /* 更自然的换行方式 */
+    word-break: normal;
+    /* 让浏览器更智能地断词 */
+    overflow-wrap: break-word;
+    /* 当一整行太长时允许断行 */
+    white-space: normal;
+    /* 允许换行 */
+  }
+
+}
+
+#bg-blur-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transition: background-image 0.5s ease-in-out;
+}
+
+#bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: -1;
+}
+
+@media (min-width: 768px) {
+  .lyrics-container {
+    width: 100%;
+     height: clamp(400px, 70vh, 700px);
+    /* 桌面端歌词更高 */
+  }
+
+  .audio-controls {
+    margin-top: 2rem;
+  }
+
+  .audio-controls button i {
+    font-size: 1.2rem;
+  }
+
+  .audio-controls button.play-icon {
+    width: 3rem;
+    height: 3rem;
+  }
+}

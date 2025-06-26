@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+  <title>简约音乐播放器</title>
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/HarmonyOS_Font.css" />
+  <link href="./css/font-awesome.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <!-- 提示 -->
+  <div id="mode-toast" class="mode-toast"></div>
+
+  <!-- 背景模糊层 -->
+  <div id="bg-blur-layer"></div>
+  <div id="bg-overlay"></div>
+
+  <main class="main-box">
+    <!-- 歌词容器-->
+    <div class="lyrics-container" id="lyrics-container" style="display: flex">
+      <div class="lyrics-title" id="lyrics-title">歌曲名称</div>
+      <div class="lyrics-scroll">
+        <ul id="lyrics-list"></ul>
+      </div>
+    </div>
+
+    <!-- 音频列表模块 -->
+    <ul id="audio-list"></ul>
+
+    <!-- 进度条 -->
+    <div class="progress-bar-box">
+      <div class="time-tag">
+        <span id="current-time">00:00</span>
+        <span id="total-time">00:00</span>
+      </div>
+      <div class="progress-bar" id="progress-bar-main">
+        <div class="current-progress" id="current-progress"></div>
+        <div class="progress-bg"></div>
+      </div>
+    </div>
+    </div>
+
+    <!-- 占位符，留出空间 -->
+    <div id="audio-controls-placeholder"></div>
+
+    <!-- 控制按钮 -->
+    <div class="audio-controls">
+      <button id="menu-controlls">
+        <i class="fa fa-regular fa-bars"></i>
+      </button>
+      <button id="prev-controlls">
+        <i class="fa fa-step-backward"></i>
+      </button>
+      <button class="play-icon" id="play-controlls">
+        <i class="fa fa-play"></i>
+      </button>
+      <button id="next-controlls">
+        <i class="fa fa-step-forward"></i>
+      </button>
+      <button id="mode-toggle-controlls">
+        <i class="fa fa-random"></i> <!-- 初始：随机播放 -->
+      </button>
+
+    </div>
+  </main>
+
+ <script src="./js/style.js"></script>
+</body>
+
+</html>
