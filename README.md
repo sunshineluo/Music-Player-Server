@@ -6,7 +6,7 @@
 
 ```base
 pnpm install
-npm  run dev
+npm run start
 ```
 
 启动后直接在端口9000启动，添加歌曲直接往music文件夹内添加歌曲即可。
