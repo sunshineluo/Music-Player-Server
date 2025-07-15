@@ -5,7 +5,6 @@
   "author": "Sunshineluo",
   "license": "MIT",
   "scripts": {
-    "dev": "node --watch index.js",
     "start": "node index.js"
   },
   "dependencies": {
