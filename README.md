@@ -1,15 +1,12 @@
 # 简约播放器
 ![](./demo.png)
-准备工作：
-电脑端需要有node服务和redis，Node 请百度搜索下载。 Redis如果没有请前往github上搜索Redis Windows 版下载安装。后面会用到。
-
 准备好内嵌歌曲图片的歌曲和对应的歌词文件，放在music文件夹内。然后启动项目运行即可使用。
 
 ### 使用方法
 
 ```base
 pnpm install
-node server.js
+npm  run dev
 ```
 
 启动后直接在端口9000启动，添加歌曲直接往music文件夹内添加歌曲即可。
