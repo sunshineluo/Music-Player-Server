@@ -29,7 +29,11 @@
     </div>
 
     <!-- 音频列表模块 -->
-    <ul id="audio-list"></ul>
+    <div id="menu-overlay"></div>
+    <div id="audio-list-panel">
+      <ul id="audio-list"></ul>
+    </div>
+
 
     <!-- 进度条 -->
     <div class="progress-bar-box">
@@ -42,7 +46,6 @@
         <div class="progress-bg"></div>
       </div>
     </div>
-    </div>
 
     <!-- 占位符，留出空间 -->
     <div id="audio-controls-placeholder"></div>
@@ -50,7 +53,7 @@
     <!-- 控制按钮 -->
     <div class="audio-controls">
       <button id="menu-controlls">
-        <i class="fa fa-regular fa-bars"></i>
+       <i class="fa fa-music"></i>
       </button>
       <button id="prev-controlls">
         <i class="fa fa-step-backward"></i>
@@ -68,7 +71,9 @@
     </div>
   </main>
 
- <script src="./js/style.js"></script>
+  <script src="./js/color-thief.min.js"></script>
+  <script src="./js/style.js"></script>
+
 </body>
 
 </html>
